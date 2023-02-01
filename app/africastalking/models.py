@@ -2,8 +2,6 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-from custom.fields import SeparatedValuesField
-
 
 class SentSMS(models.Model):
     status_code = [
@@ -31,7 +29,7 @@ class SentSMS(models.Model):
     date = models.DateTimeField(auto_now=True)
     
     cost = models.CharField(max_length=20, null=True, blank=True)
-    request_status = models.IntegerField(max_length=3, choices=status_code, null=True, blank=True)
+    request_status = models.IntegerField(choices=status_code, null=True, blank=True)
     sms_status = models.CharField(max_length=4, null=True, blank=True)
 
     class Meta:

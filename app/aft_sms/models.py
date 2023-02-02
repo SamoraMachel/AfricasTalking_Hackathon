@@ -51,8 +51,8 @@ class RecievedSMS(models.Model):
     date = models.DateTimeField()
 
     class Meta:
-        verbose_name = _("recievedsms")
-        verbose_name_plural = _("recievedsmss")
+        verbose_name = _("recieved_sms")
+        verbose_name_plural = _("recieved_sms")
 
     def __str__(self):
         return self.sender

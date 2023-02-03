@@ -14,8 +14,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+
+from aft_config import configure_aft
+configure_aft()
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('sms/', include("aft_sms.urls")),
+    path('payment/', include('aft_payment.urls')),
+    path('ussd/', include("aft_ussd.urls"))
 ]

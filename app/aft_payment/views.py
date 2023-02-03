@@ -15,6 +15,8 @@ from aft_payment.models import (
 )
 from aft_payment.serializers import (
     BankSerializer,
+    BTResponseEntrySerializer,
+    BTRecipientSerializer,
     BankTransferSerializer,
     BusinessToBusinessSerializer,
     BusinessToCustomerSerializer,
@@ -51,6 +53,65 @@ class BankViewSet(viewsets.ModelViewSet):
 class BankTransferViewSet(viewsets.ModelViewSet):
     queryset = BankTransfer.objects.all()
     serializer_class = BankTransferSerializer
+    
+    def create(self, request, *args, **kwargs):
+        bank_transfer = africastalking.Payment
+        
+        response = bank_transfer.bank_transfer(
+            request.data['product_name'],
+            request.data['recipients']
+        )
+        
+        rpt_list = []
+        
+        for recipient in request.data['recipients']:
+            bank_detail = recipient['bank_account']
+            bank_detail["bank_account_name"] = bank_detail.get('account_name', None)
+            bank_detail['bank_account_no'] = bank_detail['account_number']
+            bank_detail['bank_account_code'] = bank_detail['bank_code']
+            bank_detail['bank_account_DOB'] = bank_detail.get('DOB', None)
+            bank_detail['currency_code'] = recipient['currency_code']
+            bank_detail['amount'] = recipient['amount']
+            bank_detail['narration'] = recipient['narration']
+            bank_detail['metadata'] = recipient.get('metadata', None)
+            
+            bt_recipient = BTRecipientSerializer(data=bank_detail)
+            bt_recipient.is_valid()
+            instance = btr_serializer.save()
+            rpt_list.append(instance.id)
+            
+        
+        entries_list = []
+        
+        for entry in response['entries']:
+            entry['account_number'] = entry.pop('accountNumber')
+            entry['transaction_id'] = entry.pop('transactionId')
+            entry['transaction_fee'] = entry.pop('transactionFee')
+            entry['error_message'] = entry.pop('errorMessage')
+            
+            btr_serializer = BTResponseEntrySerializer(data=entry)
+            btr_serializer.is_valid()
+            instance = btr_serializer.save()
+            entries_list.append(instance.id)
+        
+        
+        entries_list = []
+        
+        for entry in response['entries']:
+            entry['account_number'] = entry.pop('accountNumber')
+            entry['transaction_id'] = entry.pop('transactionId')
+            entry['transaction_fee'] = entry.pop('transactionFee')
+            entry['error_message'] = entry.pop('errorMessage')
+            
+            btr_serializer = BTResponseEntrySerializer(data=entry)
+            btr_serializer.is_valid()
+            instance = btr_serializer.save()
+            entries_list.append(instance.id)
+        
+        request.data['entries'] = entries_list
+        request.data['error_message'] = response.get("error_message", None)
+        
+        return super().create(request, *args, **kwargs)
 
 
 class CardCheckoutViewSet(viewsets.ModelViewSet):

@@ -222,6 +222,8 @@ class BTResponseEntry(models.Model):
         verbose_name = _("BT Response Entry")
         verbose_name_plural = _("BT Response Entrys")
 
+
+
     def __str__(self):
         return self.name
 

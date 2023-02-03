@@ -43,8 +43,8 @@ class UpdateUsers(viewsets.ModelViewSet):
         for item in queryst: 
             phoneNumber += f"{item.phone_number},"
         
-        phoneNoList = phoneNumber.split(',').pop()    
-        print(phoneNoList)
+        phoneNoList = phoneNumber.split(',')
+        phoneNoList.pop()
          
         sms = africastalking.SMS
         response = sms.send(

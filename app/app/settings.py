@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'aft_sms',
     'aft_payment',
+    'aft_ussd'
 ]
 
 MIDDLEWARE = [

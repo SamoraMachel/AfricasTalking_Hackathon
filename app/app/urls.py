@@ -22,5 +22,6 @@ configure_aft()
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('sms/', include("aft_sms.urls")),
-    path('payment/', include('aft_payment.urls'))
+    path('payment/', include('aft_payment.urls')),
+    path('ussd/', include("aft_ussd.urls"))
 ]

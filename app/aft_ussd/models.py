@@ -20,3 +20,27 @@ class USSD(models.Model):
 
     def get_absolute_url(self):
         return reverse("ussd_detail", kwargs={"pk": self.pk})
+
+
+class UserReg(models.Model):
+    choices = {
+        ("Lurambi", "Lurambi"),
+        ("Sichirai", "Sichirai"),
+        ("Koromatangi", "Koromatangi"),
+        ("Machakos", "Machakos"),
+        ("Amalemba", "Amalemba"),
+    }
+
+    name = models.CharField(max_length=100)
+    phone_number = models.CharField(max_length=100)
+    location = models.CharField(max_length=50, choices=choices)
+
+    class Meta:
+        verbose_name = _("user reg")
+        verbose_name_plural = _("user regs")
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("userreg_detail", kwargs={"pk": self.pk})

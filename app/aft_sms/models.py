@@ -48,7 +48,7 @@ class BulkSMS(models.Model):
 
     # response
     response_message = models.CharField(max_length=200, null=True, blank=True)
-    response_recipients = models.ManyToManyField(BulkRecipient, blank=True)
+    response_recipients = models.ManyToManyField(BulkRecipient)
 
     class Meta:
         verbose_name = _("Bulk Sms")

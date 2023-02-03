@@ -132,7 +132,6 @@ AFRICASTALKING = {
     "API_KEY" : "a34e680eabd7a2198a6072710a6c839888d46503625a990f8912c61fc56f4055",
     "SHORT_CODE": "12024",
     "LIVE_URL": " https://api.africastalking.com/version1/",
-    "SANDBOX_URL": "https://api.sandbox.africastalking.com/version1/"
+    "SANDBOX_URL": "https://api.sandbox.africastalking.com/version1/",
+    "RETRY_DURATION" : 1
 }
-
-RETRY_DURATION_IN_HOURS = 1

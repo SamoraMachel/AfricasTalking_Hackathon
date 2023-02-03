@@ -16,8 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from aft_config import configure_aft
+configure_aft()
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('sms', include("aft_sms.urls")),
+    path('sms/', include("aft_sms.urls")),
     path('payment/', include('aft_payment.urls'))
 ]
